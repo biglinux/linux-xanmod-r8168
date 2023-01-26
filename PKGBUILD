@@ -6,11 +6,11 @@
 # Filip <fila pruda com>, Det <nimetonmaili(at)gmail>
 
 _linuxprefix=linux-xanmod
-_extramodules=$(find /usr/lib/modules -type d -iname 23.01.03*xanmod* | rev | cut -d "/" -f1 | rev)
+_extramodules=$(find /usr/lib/modules -type d -iname 6.1.8*xanmod* | rev | cut -d "/" -f1 | rev)
 pkgname=$_linuxprefix-r8168
 _pkgname=r8168
 pkgver=8.050.03
-pkgrel=2301030216
+pkgrel=6181
 pkgdesc="A kernel module for Realtek 8168 network cards"
 url="http://www.realtek.com.tw"
 license=("GPL")
@@ -36,7 +36,7 @@ prepare() {
 }
 
 build() {
-    _kernver="$(cat /usr/lib/modules/$_extramodules/version || true)"
+    _kernver=$(find /usr/lib/modules -type d -iname 6.1.8*xanmod* | rev | cut -d "/" -f1 | rev)
 
     cd "$_pkgname-$pkgver"
 
