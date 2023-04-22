@@ -1,6 +1,6 @@
 rebuild_module_dependencies() {
-    EXTRAMODULES=$(find /usr/lib/modules -type d -iname 6.2.11*xanmod* | rev | cut -d "/" -f1 | rev)
-    depmod $(find /usr/lib/modules -type d -iname 6.2.11*xanmod* | rev | cut -d "/" -f1 | rev)
+    EXTRAMODULES=$(find /usr/lib/modules -type d -iname 6.2.12*xanmod* | rev | cut -d "/" -f1 | rev)
+    depmod $(find /usr/lib/modules -type d -iname 6.2.12*xanmod* | rev | cut -d "/" -f1 | rev)
 }
 
 post_install() {
