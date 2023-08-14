@@ -20,11 +20,12 @@ makedepends=("$_linuxprefix-headers")
 provides=("$_pkgname=$pkgver")
 groups=("$_linuxprefix-extramodules")
 source=("https://github.com/mtorromeo/r8168/archive/refs/tags/$pkgver.tar.gz"
-        'linux518.patch' 'linux519.patch' 'linux61.patch')
+        'linux518.patch' 'linux519.patch' 'linux61.patch' 'linux64.10.patch')
 sha256sums=('76f9e7c26a8ade7b01dd34060f5b17d74387f15e9b6baa6dbba8c43634a31ce6'
             'd8d542770e504775600f686d03412a37cc32489872be7aeb388b5b08d9806096'
             'f19c663f278096a93b2fc80222e208a54ab8677f6d7eeb9c15150c7c55ec2eff'
-            'b43a2ec8270124afe6fa23fafc1be156779e9a0d47db22e1583b60891bd286d5')
+            'b43a2ec8270124afe6fa23fafc1be156779e9a0d47db22e1583b60891bd286d5'
+            'a84d06758230b796d3a1a7190e0098b7270666ba42a3df3c3fe442dd6f34997e')
 
 install=$_pkgname.install
 
@@ -33,6 +34,7 @@ prepare() {
     patch -p1 -i ../linux518.patch
     patch -p1 -i ../linux519.patch
     patch -p1 -i ../linux61.patch
+    patch -p1 -i ../linux64.10.patch
 }
 
 build() {
