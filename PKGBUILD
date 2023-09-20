@@ -6,11 +6,11 @@
 # Filip <fila pruda com>, Det <nimetonmaili(at)gmail>
 
 _linuxprefix=linux-xanmod
-_extramodules=$(find /usr/lib/modules -type d -iname 6.5.3*xanmod* | rev | cut -d "/" -f1 | rev)
+_extramodules=$(find /usr/lib/modules -type d -iname 6.5.4*xanmod* | rev | cut -d "/" -f1 | rev)
 pkgname=$_linuxprefix-r8168
 _pkgname=r8168
 pkgver=8.051.02
-pkgrel=65310
+pkgrel=65410
 pkgdesc="A kernel module for Realtek 8168 network cards"
 arch=('x86_64')
 url="http://www.realtek.com.tw"
@@ -36,7 +36,7 @@ prepare() {
 }
 
 build() {
-  _kernver=$(find /usr/lib/modules -type d -iname 6.5.3*xanmod* | rev | cut -d "/" -f1 | rev)
+  _kernver=$(find /usr/lib/modules -type d -iname 6.5.4*xanmod* | rev | cut -d "/" -f1 | rev)
 
   cd "$_pkgname-$pkgver"
 
@@ -56,11 +56,12 @@ build() {
 package() {
   cd "$_pkgname-$pkgver"
   install -Dm644 src/*.ko -t "$pkgdir/usr/lib/modules/$_extramodules/"
-  find "$pkgdir" -name '*.ko' -exec strip {} +
+  find "$pkgdir" -name '*.ko' -exec strip --strip-debug {} +
   find "$pkgdir" -name '*.ko' -exec xz {} +
 
-  echo "blacklist r8169" | \
-    install -Dm644 /dev/stdin "$pkgdir/usr/lib/modprobe.d/$pkgname.conf"
+# We'll let mhwd-db handle blacklisting for now
+#  echo "blacklist r8169" | \
+#    install -Dm644 /dev/stdin "$pkgdir/usr/lib/modprobe.d/$pkgname.conf"
 
   # set the kernel we've built for inside the install script
   sed -i -e "s/EXTRAMODULES=.*/EXTRAMODULES=${_extramodules}/g" "${startdir}/${_pkgname}.install"
