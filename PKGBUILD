@@ -30,6 +30,7 @@ prepare() {
 }
 
 build() {
+  _kernver="$(cat /usr/src/${_linuxprefix}/version)"
 
   cd "$_pkgname-$pkgver"
 
