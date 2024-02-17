@@ -10,7 +10,7 @@ _kernver="$(cat /usr/src/${_linuxprefix}/version)"
 pkgname=$_linuxprefix-r8168
 _pkgname=r8168
 pkgver=8.052.01
-pkgrel=66161
+pkgrel=67510
 pkgdesc="A kernel module for Realtek 8168 network cards"
 arch=('x86_64')
 url="http://www.realtek.com.tw"
@@ -26,7 +26,16 @@ sha256sums=('cd8ee58a260e9b654080d39e3a42e3a3fb821041ee79e631b4647d84120aa999'
 validpgpkeys=('0CADAACF70F64C654E131B3111675C743429DDEF') # Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
 
 prepare() {
-  cd "$_pkgname-$pkgver"
+  cd ${_pkgname}-${pkgver}
+
+  local src
+  for src in "${source[@]}"; do
+      src="${src%%::*}"
+      src="${src##*/}"
+      [[ $src = *.patch ]] || continue
+      msg2 "Applying patch: $src..."
+      patch -Np1 < "../$src"
+  done
 }
 
 build() {
