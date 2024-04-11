@@ -12,7 +12,7 @@ _linuxprefix=linux-xanmod
 _module=r8168
 pkgname="${_linuxprefix}-${_module}"
 pkgver=8.052.01
-pkgrel=67121
+pkgrel=68510
 pkgdesc="A kernel module for Realtek 8168 network cards"
 arch=('x86_64')
 url="http://www.realtek.com.tw"
@@ -21,14 +21,18 @@ groups=("${_linuxprefix}-extramodules")
 depends=('glibc' "${_linuxprefix}")
 makedepends=("${_linuxprefix}-headers")
 source=("https://github.com/mtorromeo/r8168/archive/$pkgver/${_module}-$pkgver.tar.gz"
-        "https://github.com/mtorromeo/r8168/releases/download/$pkgver/${_module}-$pkgver.tar.gz.asc")
+        "https://github.com/mtorromeo/r8168/releases/download/$pkgver/${_module}-$pkgver.tar.gz.asc"
+        linux68.patch)
 sha256sums=('cd8ee58a260e9b654080d39e3a42e3a3fb821041ee79e631b4647d84120aa999'
-            'SKIP')
+            'SKIP'
+            'b9d05c6ed52a2414fe69a66cbf7d0ae5afd6fe6f4cbe1a31f510e7533e38ab97')
 validpgpkeys=('0CADAACF70F64C654E131B3111675C743429DDEF') # Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
 
 prepare() {
   cd "${_module}-$pkgver"
+  patch -Np1 -i ../linux68.patch
 }
+
 
 build() {
   _kernver="$(cat /usr/src/${_linuxprefix}/version)"
